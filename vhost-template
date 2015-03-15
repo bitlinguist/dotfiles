@@ -1,11 +1,4 @@
-<Directory /home/dewald/server/site>
-    Options FollowSymLinks
-    Order Deny,Allow
-    Allow from all
-    AllowOverride None
-    Require all granted
-</Directory>
-<VirtualHost 127.0.0.1:80>
+<VirtualHost *:80>
     DocumentRoot "/home/dewald/work/server/site"
     ServerName site.dev
     ServerAlias site.dev.*.xip.io
@@ -13,4 +6,9 @@
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
 
+    <Directory /home/dewald/server/site>
+        Options FollowSymLinks
+        Allow from All
+        AllowOverride All
+    </Directory>
 </VirtualHost> 
