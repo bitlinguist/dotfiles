@@ -6,7 +6,7 @@ mkdir -v ~/work/sites
 sudo mv ./vhost-template /etc/apache2/sites-available/[site].dev.conf
 
 # DEVELOPER TOOLS
-sudo apt-get install --assume-yes git
+bash git.install.sh
 sudo add-apt-repository --assume-yes ppa:webupd8team/sublime-text-3
 sudo apt-get --assume-yes update
 sudo apt-get install --assume-yes sublime-text-installer
