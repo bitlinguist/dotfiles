@@ -1,3 +1,3 @@
-cp .bashrc ~/.bashrc
-cp -r .bash-settings ~/.bash-settings
-cp -r .bash-scripts ~/.bash-scripts
+cp -uv .bashrc ~/.bashrc
+cp -ruv .bash-settings ~/.bash-settings
+cp -ruv .bash-scripts ~/.bash-scripts
