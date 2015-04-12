@@ -73,6 +73,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 # Bash profile
 source ~/.bash-settings/.bash_profile
+source ~/.bash-scripts/*
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -104,7 +105,7 @@ fi
 #CLEAR="\[\033[0m\]"
 
 #export PS1="\[\e]0;\u@\h: \W\a\]${debian_chroot:+($debian_chroot)}\u@\h:\W$YELLOW$(parse_git_branch)$CLEAR$ "
-																																																																																																																																																																																																																																																																									
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 LTGREEN="\[\033[40;1;32m\]"
 LTBLUE="\[\033[40;1;34m\]"
 CLEAR="\[\033[0m\]"
@@ -159,7 +160,7 @@ function parse_git_branch {
 }
 
 prompt_command() {
-	export PS1="$LTGREEN\u$LTBLUE@\h:$LIGHT_GRAY\w$CLEAR"$(parse_git_branch)"\n❯ "
+  export PS1="$LTGREEN\u$LTBLUE@\h:$LIGHT_GRAY\w$CLEAR"$(parse_git_branch)"\n❯ "
   change_title
 }
 
@@ -172,7 +173,7 @@ PROMPT_COMMAND=prompt_command
 
 
 if [ -f ~/Projects/github/z/z.sh ];then
-	. ~/Projects/github/z/z.sh
+  . ~/Projects/github/z/z.sh
 fi
 
 function say() {
@@ -180,23 +181,23 @@ function say() {
 }
 
 function gitmergedev() {
-    if [ ! -d .git ]; then
-	git rev-parse --git-dir 2> /dev/null
-	if [ $? -ne 0 ];then
-	    echo 'Not in GIT directory.'
-	    return 1
-	fi
+  if [ ! -d .git ]; then
+    git rev-parse --git-dir 2> /dev/null
+  if [ $? -ne 0 ];then
+      echo 'Not in GIT directory.'
+      return 1
+  fi
     fi
 
     local branch="$1"
     if [ -z "$branch" ];then
-	branch="staging"
+  branch="staging"
     fi
 
     git show-ref --verify --quiet refs/heads/$branch
     if [ $? -ne 0 ];then
-	echo "Branch $branch doesn't exist."
-	return 1
+  echo "Branch $branch doesn't exist."
+  return 1
     fi
 
     git co $branch
@@ -219,4 +220,11 @@ if [ -f ~/.bash_functions ];then
   . ~/.bash_functions
 fi
 
-export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
+export PATH=$HOME/.npm/bin:$PATH
+export NODE_PATH=$HOME/.npm/lib/node_modules:$NODE_PATH
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+export PATH="$HOME/.bin:$PATH"
