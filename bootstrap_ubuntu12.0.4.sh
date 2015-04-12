@@ -3,6 +3,8 @@ mkdir -v ~/work/projects
 mkdir -v ~/work/server
 mkdir -v ~/work/sites
 
+bash bash.install.sh
+
 sudo mv ./vhost-template /etc/apache2/sites-available/[site].dev.conf
 
 # DEVELOPER TOOLS
