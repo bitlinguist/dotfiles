@@ -18,9 +18,9 @@ function boot_project {
 	NEW_SITE_CONF="/etc/apache2/sites-available/${project}.dev.conf"
 	DEFAULT_SITE_CONF='/etc/apache2/sites-available/[site].dev.conf'
 	sudo cp ${DEFAULT_SITE_CONF} ${NEW_SITE_CONF}
-	sudo sed -i "s/a/${project}/g" ${NEW_SITE_CONF}
+	sudo sed -i "s/[site]/${project}/g" ${NEW_SITE_CONF}
 
-	sudo bash -c 'echo ${project}".dev" >> /etc/hosts'
+	sudo bash -c 'echo 127.0.0.1 	${project}".dev" >> /etc/hosts'
 
 	sudo a2ensite ${project}'.dev.conf'
 	sudo service apache2 restart 
