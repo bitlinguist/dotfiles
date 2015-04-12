@@ -20,7 +20,7 @@ function boot_project {
 	sudo cp ${DEFAULT_SITE_CONF} ${NEW_SITE_CONF}
 	sudo sed -i "s/\[site\]/${project}/g" ${NEW_SITE_CONF}
 
-	sudo bash -c 'echo 127.0.0.1 	${project}".dev" >> /etc/hosts'
+	sudo bash -c 'echo 127.0.0.1 ${0}".dev" >> /etc/hosts' ${project}
 
 	sudo a2ensite ${project}'.dev.conf'
 	sudo service apache2 restart 
