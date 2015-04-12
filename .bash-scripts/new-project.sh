@@ -26,5 +26,9 @@ function boot_project {
 	sudo service apache2 restart 
 
 	# Setup project file
+	mkdir $HOME/work/sites/${project}
+	cd $HOME/work/sites/${project}
+	yo fixate-pw
+
 	echo "done!"
 }
