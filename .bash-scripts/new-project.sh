@@ -22,6 +22,9 @@ function boot_project {
 
 	sudo bash -c 'echo ${project}".dev" >> /etc/hosts'
 
+	sudo a2ensite ${project}'.dev.conf'
+	sudo service apache2 restart 
+
 	# Setup project file
 	echo "done!"
 }
