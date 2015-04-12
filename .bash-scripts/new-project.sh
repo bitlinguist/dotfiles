@@ -30,5 +30,9 @@ function boot_project {
 	cd $HOME/work/sites/${project}
 	yo fixate-pw
 
+	cd $HOME/work/server
+	ln -s ../sites/${project}/src ./${project}
+	cd $HOME/work/sites/${project}
+
 	echo "done!"
 }
