@@ -1,3 +1,3 @@
-selfcalling () {
+check_bash () {
 	echo 'test'
 }
