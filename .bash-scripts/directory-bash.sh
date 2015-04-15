@@ -1,0 +1,3 @@
+selfcalling () {
+	echo 'test'
+}
