@@ -104,7 +104,7 @@ fi
 #CLEAR="\[\033[0m\]"
 
 #export PS1="\[\e]0;\u@\h: \W\a\]${debian_chroot:+($debian_chroot)}\u@\h:\W$YELLOW$(parse_git_branch)$CLEAR$ "
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
 LTGREEN="\[\033[40;1;32m\]"
 LTBLUE="\[\033[40;1;34m\]"
 CLEAR="\[\033[0m\]"
@@ -129,8 +129,8 @@ function minutes_since_last_commit {
 }
 
 function git_history_graph {
-  # Include --author to limit to one person: --author "Tristan Harward" 
-  for hour in $(seq 8 -1 0); do git log --before="${hour} hours" --after="$[${hour}+1] hours" --format=oneline | wc -l; done 
+  # Include --author to limit to one person: --author "Tristan Harward"
+  for hour in $(seq 8 -1 0); do git log --before="${hour} hours" --after="$[${hour}+1] hours" --format=oneline | wc -l; done
 }
 
 function minutes_with_color {
@@ -150,7 +150,7 @@ function minutes_with_color {
 }
 
 function parse_git_dirty {
-  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean" ]] 
+  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean" ]]
 }
 
 function parse_git_branch {
@@ -158,17 +158,10 @@ function parse_git_branch {
   [[ $BRANCH ]] && echo " [$BRANCH$(parse_git_dirty)]"
 }
 
-prompt_command() {
-  export PS1="$LTGREEN\u$LTBLUE@\h:$LIGHT_GRAY\w$CLEAR"$(parse_git_branch)"\n❯ "
-  change_title
-}
 
 function change_title () {
-  echo -ne "\033]0;ter\007"
+  echo -ne "\033]0;bitlinguist bash\007"
 }
-
-PROMPT_COMMAND=prompt_command
-
 
 
 if [ -f ~/Projects/github/z/z.sh ];then
@@ -227,3 +220,11 @@ export NODE_PATH=$HOME/.npm/lib/node_modules:$NODE_PATH
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 export PATH="$HOME/.bin:$PATH"
+
+prompt_command() {
+  export PS1="$LTGREEN\u$LTBLUE@\h:$LIGHT_GRAY\w$CLEAR"$(parse_git_branch)"\n❯ "
+  change_title
+  check_bash
+}
+
+PROMPT_COMMAND=prompt_command
