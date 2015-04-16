@@ -160,7 +160,7 @@ function parse_git_branch {
 
 
 function change_title () {
-  echo -ne "\033]0;ter\007"
+  echo -ne "\033]0;bitlinguist bash\007"
 }
 
 
