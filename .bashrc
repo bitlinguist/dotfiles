@@ -72,7 +72,9 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 # Bash profile
 source ~/.bash-settings/.bash_profile
-source ~/.bash-scripts/*
+for file in ~/.bash-scripts/*.sh
+do . $file
+done
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
