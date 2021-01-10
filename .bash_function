@@ -1,0 +1,77 @@
+#!/bin/sh
+function gitmergedev() {
+  if [ ! -d .git ]; then
+    git rev-parse --git-dir 2> /dev/null
+  if [ $? -ne 0 ];then
+      echo 'Not in GIT directory.'
+      return 1
+  fi
+    fi
+
+    local branch="$1"
+    if [ -z "$branch" ];then
+  branch="staging"
+    fi
+
+    git show-ref --verify --quiet refs/heads/$branch
+    if [ $? -ne 0 ];then
+  echo "Branch $branch doesn't exist."
+  return 1
+    fi
+
+    git co $branch
+    git merge --no-ff dev
+    git co dev
+    git push
+}
+
+function say() {
+    if [ espeak ]; then 
+        espeak -v en "$1" --stdout | paplay
+    fi;
+}
+
+function change_title () {
+  echo -ne "\033]0;ter\007"
+}
+
+function parse_git_dirty {
+  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean" ]] 
+}
+
+#function parse_git_branch() {
+#   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+#}
+function parse_git_branch {
+  local BRANCH=$(__git_ps1 "%s$(minutes_with_color)")
+  [[ $BRANCH ]] && echo " [$BRANCH$(parse_git_dirty)]"
+}
+
+function git_history_graph {
+  # Include --author to limit to one person: --author "Tristan Harward" 
+  for hour in $(seq 8 -1 0); do git log --before="${hour} hours" --after="$[${hour}+1] hours" --format=oneline | wc -l; done 
+}
+
+function minutes_with_color {
+  local G="$(__gitdir)"
+  if [ -n "$G" ]; then
+    local MINUTES=`minutes_since_last_commit`
+    if [ "$MINUTES " -gt 120 ]; then
+        local COLOR=${RED}
+    elif [ "$MINUTES" -gt 30 ]; then
+        local COLOR=${YELLOW}
+    else
+        local COLOR=${GREEN}
+    fi
+    local SINCE_LAST_COMMIT="|${COLOR}${MINUTES}m${NORMAL}|${COLOR}$(git_history_graph) ${NORMAL}"
+    echo ${SINCE_LAST_COMMIT}
+  fi
+}
+
+function minutes_since_last_commit {
+  local NOW=`date +%s`
+  local LAST_COMMIT=`git log --pretty=format:'%at' -1`
+  local SECONDS_SINCE_LAST_COMMIT=$((NOW-LAST_COMMIT))
+  local MINUTES_SINCE_LAST_COMMIT=$((SECONDS_SINCE_LAST_COMMIT/60))
+  echo $MINUTES_SINCE_LAST_COMMIT
+}
