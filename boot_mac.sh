@@ -1,7 +1,3 @@
-mkdir -v ~/work
-mkdir -v ~/work/projects
-mkdir -v ~/work/sites
-
 bash bash.install.sh
 
 sudo mkdir -v /etc/apache2/vhosts
